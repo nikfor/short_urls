@@ -10,7 +10,8 @@ class UrlsController < ApplicationController
   end
 
   def create
-    if url = Url.create(url_params)
+    url = Url.new(url_params)
+    if url.save
       render json: { short_url: url.short_url }
     else
       render json: { errors: url.errors.full_messages }, status: 422
@@ -18,7 +19,7 @@ class UrlsController < ApplicationController
   end
 
   def stats
-    if @url.present?
+    if @url
       render json: { url: @url.short_url, count: @url.counter }
     else
       render json: { errors: ['url not found'] }, status: 404
