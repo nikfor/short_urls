@@ -1,6 +1,6 @@
 class Url < ApplicationRecord
   validates :original_url, presence: true, format: /\A[a-zA-Z0-9\-._~:\/?#\[\]@!$&'()*+,;=]*\z/
-  before_validation :set_short_url
+  before_validation :set_short_url, on: :create
 
   def set_short_url
     self.short_url = SecureRandom.hex(4)

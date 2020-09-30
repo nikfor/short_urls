@@ -65,6 +65,12 @@ RSpec.describe 'Urls', type: :request do
       it 'increment counter' do
         expect(url.reload.counter).to eq 1
       end
+
+      it 'not change short url after request' do
+        short_url = url.short_url
+        get url_path(short_url)
+        expect(url.reload.short_url).to eq short_url
+      end
     end
 
     context 'if requested url not exist in database' do
